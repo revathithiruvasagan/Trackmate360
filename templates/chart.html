@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="dummy.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='css/main.css')}}"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static',filename='favicon.png')}}"
+    />
+    <title>Trackmate 360</title>
+  </head>
+  <body
+    style="
+      background-color: black;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    "
+  >
+    <div id="chart" style="margin-left: 300px">
+      <h4 style="color: aliceblue">Total Price vs Quantity</h4>
+      <div style="width: 500px; height: 500px; display: flex">
+        <canvas id="myChart" width="400" height="400"></canvas>
+      </div>
+      <br /><br /><br />
+      <h4 style="color: aliceblue">Number of sales Vs Date</h4>
+
+      <div style="width: 500px; height: 500px; display: flex">
+        <canvas id="salesChart" width="400" height="400"></canvas>
+      </div>
+      <script>
+        // JavaScript code to fetch data and create a chart
+        document.addEventListener("DOMContentLoaded", function () {
+          // Make an AJAX request to the server-side route
+          fetch("/get_sales_data_from_db")
+            .then((response) => response.json())
+            .then((data) => {
+              // Extract data for the chart
+              const dates = data.map((entry) => entry.date_of_sales);
+              const numberOfSales = data.map((entry) => entry.number_of_sales);
+
+              // Create a Chart.js chart
+              const ctx = document
+                .getElementById("salesChart")
+                .getContext("2d");
+              const salesChart = new Chart(ctx, {
+                type: "radar", // Specify the chart type (bar, line, pie, etc.)
+                data: {
+                  labels: dates,
+                  datasets: [
+                    {
+                      label: "Number of Sales",
+                      data: numberOfSales,
+                      backgroundColor: "rgba(94,190,196, 0.2)",
+                      borderColor: "rgba(94,190,196, 1)",
+                      borderWidth: 2,
+                    },
+                  ],
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                    },
+                  },
+                },
+              });
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+        });
+      </script>
+      <script>
+        // JavaScript code to fetch data and create a chart
+        document.addEventListener("DOMContentLoaded", function () {
+          // Make an AJAX request to the server-side route
+          fetch("/get_data_from_db")
+            .then((response) => response.json())
+            .then((data) => {
+              // Extract data for the chart
+              const labels = data.map((entry) => entry.column1);
+              const values = data.map((entry) => entry.column2);
+
+              // Create a Chart.js chart
+              const ctx = document.getElementById("myChart").getContext("2d");
+              const myChart = new Chart(ctx, {
+                type: "line", // Specify the chart type (bar, line, pie, etc.)
+                data: {
+                  labels: labels,
+                  datasets: [
+                    {
+                      label: "total price",
+                      data: values,
+                      backgroundColor: "rgba(94,190,196, 0.2)",
+                      borderColor: "rgba(94,190,196, 1)",
+                      borderWidth: 2,
+                    },
+                  ],
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                    },
+                  },
+                },
+              });
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+        });
+      </script>
+    </div>
+  </body>
+</html>

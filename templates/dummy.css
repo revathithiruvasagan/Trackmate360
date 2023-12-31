@@ -1,0 +1,213 @@
+body {
+  background-color: #000000;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  height: 600px;
+  position: fixed;
+  background-color: rgb(0, 0, 0);
+  /* background: url("https://img.freepik.com/free-vector/black-desktop-background-geometric-pattern-design-vector_53876-140229.jpg?size=626&ext=jpg&ga=GA1.1.1172559400.1688782441&semt=ais"); */
+}
+#weicon {
+  color: #ad44b4;
+}
+#date {
+  background-color: #2822288e;
+  /* display: inline-block; */
+  padding-right: 30px;
+  margin-top: 7px;
+  padding-left: 30px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  border: 5px solid rgba(255, 255, 255, 0.473);
+  color: white;
+  text-align: center;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 2px;
+  filter: invert(0.8) sepia(100%) saturate(10000%) hue-rotate(240deg);
+}
+#ion-icon {
+  color: white;
+  text-align: center;
+  border: 1px solid #ad44b4;
+  border-radius: 30px;
+  padding: 13px;
+  background-color: #ad44b4;
+}
+
+#inputget {
+  background-color: #2822288e;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-left: 25px;
+  margin-right: 20px;
+}
+#nameof {
+  color: #ad44b4;
+  margin-left: 230px;
+}
+#content {
+  border: none;
+  border-bottom: 3px solid #ad44b4;
+  padding: 5px;
+  width: 45%;
+  background-color: rgba(84, 81, 84, 0.356);
+  color: white;
+}
+input:focus {
+  outline: none;
+}
+#count {
+  background-color: #2822288e;
+  border: 1px solid rgba(255, 255, 255, 0.473);
+  padding-right: 7px;
+  padding-left: 7px;
+  color: white;
+  padding-top: 9px;
+  padding-bottom: 9dvi;
+}
+
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: rgb(230, 30, 244);
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 17px;
+  padding: 10px;
+  width: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  margin-right: 10px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+#name {
+  color: white;
+  margin-left: 5px;
+  margin-top: 0;
+}
+#navigation_bar {
+  float: left;
+  height: 600px;
+}
+li a {
+  display: block;
+  color: #fff9f9;
+  padding: 15px 16px;
+  text-decoration: none;
+  text-align: center;
+}
+#maxi {
+  width: 50%;
+  background-color: #555;
+}
+/* Change the link color on hover */
+li a:hover {
+  background-color: #555;
+  color: white;
+}
+#customers {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+  border: none;
+  float: right;
+  margin-right: 20px;
+  background-color: #000000;
+}
+.dropdown-container {
+  display: none;
+  background-color: rgb(54, 53, 52);
+}
+
+#customers td,
+#customers th {
+  border: none;
+  padding: 12px;
+}
+
+#customers tr:nth-child(even) {
+  background-color: #000000ee;
+  color: aliceblue;
+}
+
+#customers tr:nth-child(odd) {
+  background-color: #1c1b1bee;
+  color: aliceblue;
+}
+
+#customers tr:hover {
+  background-color: rgb(56, 54, 54);
+}
+
+#customers th {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  text-align: left;
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+#att_name {
+  color: white;
+  background-color: #2822288e;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+#att_name:hover {
+  background-color: #23212142;
+}
+#dropdown {
+  margin-right: 300px;
+}
+#dropdown th,
+td {
+  margin-left: 0;
+  border: none;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 17px;
+  padding-top: 17px;
+  color: aliceblue;
+  font-weight: 400;
+}
+option {
+  border-radius: none;
+  background-color: #000000;
+  padding-top: 30px;
+  display: inline-block;
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trackmate 360</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static',filename='favicon.png')}}"
+    />
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: url("https://img.freepik.com/free-photo/studio-background-concept-dark-gradient-purple-studio-room-background-product_1258-53875.jpg?size=626&ext=jpg&ga=GA1.1.1172559400.1688782441&semt=ais");
+        color: #ffffff; /* White */
+        margin: 0;
+        padding: 0;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      #report-form {
+        background-color: #42155445; /* Dark Purple */
+        padding: 40px;
+        border-radius: 5px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        animation: fadeIn 1s;
+        opacity: 0.9;
+      }
+
+      #report-form label {
+        display: block;
+        margin: 15px 0;
+      }
+
+      #report-form input {
+        padding: 15px;
+        margin: 15px;
+        border: 1px solid #ffffff; /* White */
+        border-radius: 8px;
+        background-color: #2a1b3d; /* Purple */
+        color: #ffffff; /* White */
+        width: calc(100% - 32px);
+        box-sizing: border-box;
+      }
+
+      #report-form button {
+        background-color: #5b1563; /* Dark Pink */
+        color: #ffffff; /* White */
+        padding: 18px 30px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: background-color 0.3s ease, transform 0.3s ease,
+          box-shadow 0.3s ease;
+        animation: pulse 1s infinite;
+      }
+
+      #report-form button:hover {
+        background-color: #922d91; /* Light Pink */
+        transform: scale(1.05);
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+      }
+
+      #report-form button:active {
+        transform: scale(0.95);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 0.9;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="report-form">
+      <h2>Generate Report</h2>
+      <p>Select a date range for the report generation:</p>
+
+      <form action="/generate_pdf" method="post">
+        <label for="fromDate">From Date:</label>
+        <input type="date" id="fromDate" name="date" required />
+
+        <label for="toDate">To Date:</label>
+        <input type="date" id="toDate" name="date1" required />
+
+        <button type="submit">Generate Report</button>
+      </form>
+    </div>
+  </body>
+</html>

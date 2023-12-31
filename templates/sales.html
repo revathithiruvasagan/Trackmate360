@@ -1,0 +1,240 @@
+{% extends 'layout.html' %} {% block title %}Trackmate360{% endblock %} 
+{% block content %}
+    <div class="content">
+      <h1 style=" margin-left: 250px">Sales</h1>
+    
+      {% if sales|length < 1 %}
+      <h4>There are no sales. Create one below</h4>
+
+      <form action="/sales" method="POST" style="margin-left: 225px;">
+        <table id="dropdown">
+          <tr>
+            <th>Sales Date</th>
+            <th>Categories</th>
+            <th>Brands</th>
+            <th>Product Info</th>
+          </tr>
+          <tr>
+            <td>
+              <input id="date" type="date" name="date" class="date" required>
+            </td>
+            <td>
+              <select
+                name="cat"
+                id="att_name"
+                class="cat"
+                onchange="updateBrands()"
+              >
+              
+                {% for row in cat %}
+               
+                <option value="{{ row }}" name="cat" id="cat">{{ row }}</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td>
+              <select
+                name="brand"
+                id="att_name"
+                class="brand"
+                onchange="updateValues()"
+              >
+                <option value="" disabled selected>Select a value</option>
+              </select>
+            </td>
+            <td>
+              <select
+                id="att_name"
+                name="value"
+                class="value"
+                onchange="updateStocks()"
+              >
+                <option value="" disabled selected>Select a value</option>
+              </select>
+            </td>
+           
+          </tr>
+        </table>
+        <h3 style="margin-left: 35px;" class="stock" >Stock remaining : </h3>
+        
+        <label id="name" style="margin-left: 35px;">Quantity</label
+        ><br /><br />
+        <input type="number" id="count" class="quantity" name="quantity" min="1" step="1" style="margin-left: 35px;" />
+        <br /><br />
+        <button class="button" style="vertical-align: middle;margin-left: 35px;padding: 10x;">
+          <span>Add</span>
+        </button>
+        <br /><br />
+      </form>
+    </div>
+      {% else %}
+      <div>
+        <form action="/sales" method="POST" style="margin-left: 225px;">
+          <table id="dropdown">
+            <tr>
+              <th>Sales Date</th>
+              <th>Categories</th>
+              <th>Brands</th>
+              <th>Product Info</th>
+            </tr>
+            <tr>
+              <td>
+                <input id="date" type="date" name="date" class="date" required>
+              </td>
+              <td>
+                <select
+                  name="cat"
+                  id="att_name"
+                  class="cat"
+                  onchange="updateBrands()"
+                >
+                
+                  {% for row in cat %}
+                 
+                  <option value="{{ row }}" name="cat" id="cat">{{ row }}</option>
+                  {% endfor %}
+                </select>
+              </td>
+              <td>
+                <select
+                  name="brand"
+                  id="att_name"
+                  class="brand"
+                  onchange="updateValues()"
+                >
+                  <option value="" disabled selected>Select a value</option>
+                </select>
+              </td>
+              <td>
+                <select
+                  id="att_name"
+                  name="value"
+                  class="value"
+                  onchange="updateStocks()"
+                >
+                  <option value="" disabled selected>Select a value</option>
+                </select>
+              </td>
+             
+            </tr>
+          </table>
+          <h3 style="margin-left: 35px;" class="stock" >Stock remaining : </h3>
+          
+          <label id="name" style="margin-left: 35px;">Quantity</label
+          ><br /><br />
+          <input type="number" id="count" class="quantity" name="quantity" min="1" step="1" style="margin-left: 35px;" />
+          <br /><br />
+          <button class="button" style="vertical-align: middle;margin-left: 35px;padding: 10x;">
+            <span>Add</span>
+          </button>
+          <br /><br />
+        </form>
+      </div>
+    {% endif %}
+      <script>
+        // Get today's date in the format "YYYY-MM-DD"
+        const today = new Date().toISOString().split("T")[0];
+    
+        // Set the default date value
+        document.getElementsByClassName("date")[0].value = today;
+    
+        function updateBrands() {
+          const categorySelect = document.getElementsByClassName("cat")[0];
+          const brandSelect = document.getElementsByClassName("brand")[0];
+    
+          // Get the selected category and brand
+          const selectedCategory = categorySelect.value;
+          const selectedBrand = brandSelect.value;
+    
+          brandSelect.innerHTML = "";
+    
+          const defaultOption = document.createElement("option");
+          defaultOption.value = "";
+          defaultOption.text = "Select a value";
+          brandSelect.add(defaultOption);
+    
+          // Fetch data from the server based on the selected category and brand
+          fetch(`/get_brands/${selectedCategory}`)
+            .then((response) => response.json())
+            .then((brands) => {
+              // Add new options based on the fetched values
+              brands.forEach((brand) => {
+                const option = document.createElement("option");
+                option.text = brand;
+                brandSelect.add(option);
+              });
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+        }
+        // Call updateValues initially to populate the second dropdown based on the default category and brand
+        updateBrands();
+    
+        function updateValues() {
+          const categorySelect = document.getElementsByClassName("cat")[0];
+          const brandSelect = document.getElementsByClassName("brand")[0];
+          const valueSelect = document.getElementsByClassName("value")[0];
+    
+          // Get the selected category and brand
+          const selectedCategory = categorySelect.value;
+          const selectedBrand = brandSelect.value;
+    
+          valueSelect.innerHTML = "";
+    
+          const defaultOption2 = document.createElement("option");
+          defaultOption2.value = "";
+          defaultOption2.text = "Select a value";
+          valueSelect.add(defaultOption2);
+    
+          // Fetch data from the server based on the selected category and brand
+          fetch(`/get_products/${selectedCategory}/${selectedBrand}`)
+            .then((response) => response.json())
+            .then((data) => {
+              // Add new options based on the fetched values
+              data.forEach((row) => {
+                const option = document.createElement("option");
+                option.text = `${row.pro_name} - ${row.att_value} - ${row.price}/${row.soldas}`;
+                option.value = `${row.pro_name},${row.att_value},${row.price},${row.soldas}`;
+                valueSelect.add(option);
+              });
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+        }
+    
+        // Call updateValues initially to populate the second dropdown based on the default category and brand
+        updateValues();
+    
+        function updateStocks() {
+          const categorySelect = document.getElementsByClassName("cat")[0];
+          const brandSelect = document.getElementsByClassName("brand")[0];
+          const valueSelect = document.getElementsByClassName("value")[0];
+          const stockRemaining = document.getElementsByClassName("stock")[0];
+          const quantityInput = document.getElementsByClassName("quantity")[0];
+    
+          // Get the selected category and brand
+          const selectedCategory = categorySelect.value;
+          const selectedBrand = brandSelect.value;
+          const selectedProduct = valueSelect.value;
+    
+          stockRemaining.innerHTML = "";
+    
+          // Fetch data from the server based on the selected category and brand
+          fetch(
+            `/get_stock/${selectedCategory}/${selectedBrand}/${selectedProduct}`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              stockRemaining.innerHTML = `Stock remaining : ${data[0]}`;
+              quantityInput.setAttribute("max", data[0]);
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+          stockRemaining.innerHTML = `none`;
+        }
+    
+        updateStock();
+      </script>
+      <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+      <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+          
+      {% endblock %}
+    </div>
+    

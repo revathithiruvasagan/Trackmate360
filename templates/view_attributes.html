@@ -1,0 +1,110 @@
+{% extends 'layout.html' %} {% block title %}Trackmate360{% endblock %} {% block
+content %}
+<br />
+<br />
+<br />
+<input
+  type="text"
+  id="content"
+  class="attributes"
+  onkeyup="searchTable()"
+  placeholder="Search for attributes"
+  style="margin-left: 250px"
+/>
+<br />
+<br />
+<br />
+<input
+  type="text"
+  id="content"
+  class="values"
+  onkeyup="searchTable()"
+  placeholder="Search for values"
+  style="margin-left: 250px"
+/>
+
+<h2 style="margin-left: 250px">Attributes</h2>
+{% if tasks %}
+<table id="customers">
+  <tr>
+    <th>Attributes</th>
+    <th>Values</th>
+    <th>Actions</th>
+  </tr>
+
+  {% for task in tasks %}
+  <tr>
+    <td>{{task.att_name}}</td>
+    <td>{{task.att_value}}</td>
+    <td>
+      <a href="/delete3/{{task.att_id}}"
+        ><ion-icon name="trash-outline" id="ion-icon"></ion-icon
+      ></a>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="/update3/{{task.att_id}}"
+        ><ion-icon
+          name="create-outline"
+          style="size: 15px"
+          id="ion-icon"
+        ></ion-icon
+      ></a>
+    </td>
+  </tr>
+
+  {% endfor %}
+</table>
+
+{% endif %}
+
+<div id="noResults" style="display: none">
+  <h2 style="margin-left: 600px">No results found</h2>
+</div>
+
+<script>
+  function searchTable() {
+    const attributesInput = document.getElementsByClassName("attributes")[0];
+    const valuesInput = document.getElementsByClassName("values")[0];
+    table = document.getElementById("customers");
+    const rows = table.getElementsByTagName("tr");
+    let totalMatchCount = 0;
+
+    for (let i = 1; i < rows.length; i++) {
+      let rowDisplay = "";
+
+      const attributesFilter = attributesInput.value.toUpperCase();
+      const valuesFilter = valuesInput.value.toUpperCase();
+
+      const attributesCellContent = rows[i]
+        .getElementsByTagName("td")[0]
+        .textContent.toUpperCase();
+      const valuesCellContent = rows[i]
+        .getElementsByTagName("td")[1]
+        .textContent.toUpperCase();
+
+      if (
+        attributesCellContent.indexOf(attributesFilter) > -1 &&
+        valuesCellContent.indexOf(valuesFilter) > -1
+      ) {
+        rowDisplay = "";
+        totalMatchCount++;
+      } else {
+        rowDisplay = "none";
+      }
+
+      rows[i].style.display = rowDisplay;
+    }
+
+    // Display or hide the "No results found" message based on totalMatchCount
+    const noResultsMessage = document.getElementById("noResults");
+    noResultsMessage.style.display = totalMatchCount === 0 ? "block" : "none";
+  }
+</script>
+<script
+  type="module"
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+></script>
+<script
+  nomodule
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+></script>
+{% endblock %}

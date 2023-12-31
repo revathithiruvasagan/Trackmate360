@@ -1,0 +1,98 @@
+{% extends 'layout.html' %}
+
+{% block head %} 
+<title>Trackmate 360</title>
+{% endblock %}
+
+
+{% block content %} 
+<div class="content">
+    <h1>Update task me</h1>
+
+    <div class="form">
+        {% if task %}
+        <form action="/update4/{{task.pro_id}}" method="POST"  style="margin-left: 230px;">
+    &nbsp; &nbsp; &nbsp;<label id="name">Name</label><br><br>
+    <input type="text" name="item" id="content" placeholder="name" value="{{task.pro_name}}"/><br /><br />
+    <table id="dropdown">
+      <tr>
+        <th>Categories</th>
+        <th>Brands</th>
+        <th>Attributes</th>
+        <th>Values</th>
+      </tr>
+      <tr>
+    <td>
+    <select name="cat" id="att_name" class="cat" value="{{task.cat_name}}">
+      {% for row in cat %}
+      <option value="{{ row }}" name="cat" id="cat">{{ row }}</option>
+      {% endfor %}</select>
+    </td>
+    <td>
+    <select name="brand" id="att_name" class="brand" value="{{task.brand_name}}">
+      {% for row in brand %}
+      <option value="{{ row }}" name="brand" id="brand">{{ row }}</option>
+      {% endfor %}
+    </select>
+  </td>
+    <td>
+    <select name="att_name" id="att_name" class="att_name" value="{{task.att_name}}" onchange="updateValues()">
+      {% for row in att_name %}
+      <option value="{{ row }}">{{ row }}</option>
+      {% endfor %}
+    </select>
+  </td>
+   <td>
+    <select id="att_name" name="att_value" class="value" ></select>
+   </td>
+      </tr>
+    </table>
+    <br><br>
+    &nbsp; &nbsp; &nbsp;<label id="name">Inventory</label><br><br> 
+   <input type="text" name="invent" id="content" value="{{task.invent}}" required /><br /><br />
+   &nbsp; &nbsp; &nbsp;<label id="name">Sold as</label><br><br>
+   <input type="text" name="soldas" id="content" value="{{task.soldas}}" required /><br /><br />
+   &nbsp; &nbsp; &nbsp;<label id="name">Price</label><br><br> 
+   <input type="text" name="price" id="content" value="{{task.price}}" required /><br /><br />
+   &nbsp; &nbsp; &nbsp;<label id="name">GST + Tax</label><br><br>
+   <input type="text" name="tax" id="content" value="{{task.tax}}" required /><br /><br />
+   <button class="button" style="vertical-align:middle"><span>Add</span></button> <br><br>
+
+  </form>
+        
+        </div>
+        
+        <script>
+            function updateValues() {
+                const attributeSelect = document.getElementsByClassName("att_name")[0];
+                const valueSelect = document.getElementsByClassName("value")[0];
+        
+                // Get the selected attribute
+                const selectedAttribute = attributeSelect.value;
+        
+                // Clear previous options
+                valueSelect.innerHTML = "";
+        
+                // Fetch data from the server based on the selected attribute
+                fetch(`/get_values/${selectedAttribute}`)
+                    .then(response => response.json())
+                    .then(values => {
+                        // Add new options based on the fetched values
+                        values.forEach(value => {
+                            const option = document.createElement("option");
+                            option.text = value;
+                            valueSelect.add(option);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            }
+        
+            // Call updateValues initially to populate the second dropdown based on the default attribute
+            updateValues();
+        </script>
+        {% else %}
+            <p>Task Not Found</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

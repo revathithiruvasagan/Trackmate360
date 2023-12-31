@@ -1,0 +1,39 @@
+{% extends 'layout.html' %} {% block title %}Trackmate 360{% endblock %} {%
+block content %}
+<div class="content">
+  <h1 style="margin-left: 250px">Inventory</h1>
+
+  {% if tasks|length < 1 %}
+  <h4 style="margin-left: 250px">There are no tasks. Create one below</h4>
+  {% else %}
+  <table id="customers">
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Tax</th>
+      <th>Selling_price</th>
+      <th>Inventory</th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+      <td>{{task.pro_name}}-{{task.att_value}}</td>
+      <td>{{task.price}}/{{task.soldas}}</td>
+      <td>{{task.quantity}}</td>
+      <td>{{task.tax}}</td>
+      <td>{{task.sell}}</td>
+      <td>{{task.invent}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <script
+    type="module"
+    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+  ></script>
+  <script
+    nomodule
+    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+  ></script>
+
+  {% endif %} {% endblock %}
+</div>

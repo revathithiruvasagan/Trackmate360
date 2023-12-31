@@ -1,0 +1,22 @@
+{% extends 'layout.html' %} {% block title %}Trackmate360{% endblock %} {% block
+content %}
+<div class="content">
+  <h1 style="margin-left: 250px">Brands</h1>
+  {% if tasks|length < 1 %}
+  <h4 style="margin-left: 250px">There are no tasks. Create one below</h4>
+  <form action="/brands" method="POST" style="margin-left: 230px">
+    <input type="text" name="content" id="content" />
+    <button class="button" style="vertical-align: middle">
+      <span>Add</span>
+    </button>
+  </form>
+  {% else %}
+  <form action="/brands" method="POST" style="margin-left: 230px">
+    <input type="text" name="content" id="content" />
+    <button class="button" style="vertical-align: middle">
+      <span>Add</span>
+    </button>
+  </form>
+
+  {% endif %} {% endblock %}
+</div>

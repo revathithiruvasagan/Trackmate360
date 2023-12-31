@@ -1,0 +1,151 @@
+{% extends 'layout.html' %} {% block title %}Trackmate360{% endblock %} {% block
+content %}
+<br />
+<br />
+<br />
+<input
+  type="text"
+  id="content"
+  onkeyup="searchTable()"
+  placeholder="Search for sales..."
+  style="margin-left: 250px"
+/>
+
+<h2 style="margin-left: 250px">Sales</h2>
+<div
+  id="maxi"
+  style="
+    background-color: #55555536;
+    margin-left: 250px;
+    margin-right: 20px;
+    padding: 5px;
+    padding-bottom: 17px;
+  "
+>
+  {% if sales %}
+  <p style="color: #fefefe; margin-left: 40px; font-weight: bolder">
+    Maximum purchases &#128200; &#127882;
+  </p>
+  {% for task in maxsale %}
+  <!-- <li style="color: #ad44b4; margin-left: 40px">
+    {{task.pro_name}} has been purchased at high rate
+  </li> -->
+  <div
+    style="color: #dfaa0b8c; margin-left: 40px; font-weight: bold"
+    class="message"
+    data-text=" {{task.pro_name}} has been purchased at high rate"
+  ></div>
+  {% endfor %}
+</div>
+<br />
+<table id="customers">
+  <tr>
+    <th>Sales Id</th>
+    <th>Product</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Total price</th>
+    <th>Actions</th>
+  </tr>
+  {% for task in sales %}
+  <tr>
+    <td>{{task.sales_id}}</td>
+    <td>{{task.pro_name}}-{{task.att_value}}</td>
+    <td>&#8377;{{task.price}}/{{task.soldas}}</td>
+    <td>{{task.quantity}}</td>
+    <td>&#8377;{{task.total}}</td>
+
+    <td>
+      <a href="/delete_sales/{{task.sales_id}}"
+        ><ion-icon name="trash-outline" id="ion-icon"></ion-icon
+      ></a>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="/update_sales/{{task.sales_id}}"
+        ><ion-icon
+          name="create-outline"
+          style="size: 15px"
+          id="ion-icon"
+        ></ion-icon
+      ></a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<h2 style="color: #ad44b4; margin-left: 600px">No Sales done...</h2>
+<h4 style="color: #ad44b4; margin-left: 600px">Start your sales now...</h4>
+
+{% endif %}
+<div id="noResults" style="display: none">
+  <h2 style="color: #ad44b4; margin-left: 600px">No results found...</h2>
+</div>
+<script
+  type="module"
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+></script>
+<script
+  nomodule
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+></script>
+<script>
+  // JavaScript function for table search
+  function searchTable() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("content");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("customers");
+    tr = table.getElementsByTagName("tr");
+
+    // Counter for matching rows
+    var matchCount = 0;
+
+    // Loop through all table rows, and hide those that don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1]; // Assuming the search is based on the first column (change as needed)
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+          matchCount++;
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+
+    // Display or hide the "No results found" message based on matchCount
+    var noResultsMessage = document.getElementById("noResults");
+    noResultsMessage.style.display = matchCount === 0 ? "block" : "none";
+  }
+</script>
+
+<script>
+  var messages = document.querySelectorAll(".message");
+
+  messages.forEach(function (element) {
+    var i = 0;
+    var speed = 50;
+    var text = element.dataset.text;
+
+    function typeWriter() {
+      if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+
+    typeWriter();
+  });
+</script>
+
+<script
+  type="module"
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+></script>
+<script
+  nomodule
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+></script>
+{% endblock %}

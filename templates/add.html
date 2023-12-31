@@ -1,0 +1,33 @@
+{% extends 'layout.html' %} {% block head %}
+<title>Trackmate 360</title>
+{% endblock %} {% block content %}
+<div class="content">
+  <h2 style="color: #ad44b4; margin-left: 230px">Update Task</h2>
+
+  <div class="form">
+    <p>{{task}}</p>
+    {% if task %}
+    <form
+      action="/update1/{{task.cat_id}}"
+      method="POST"
+      style="margin-left: 230px"
+    >
+      <label style="color: #ad44b4; font-size: larger">Category</label
+      >&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+      <input
+        type="text"
+        name="content"
+        id="content"
+        value="{{task.cat_name}}"
+      />
+      <button class="button" style="vertical-align: middle; size: 19px">
+        <span>Update</span>
+      </button>
+      <br /><br />
+    </form>
+    {% else %}
+    <p>Task Not Found</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

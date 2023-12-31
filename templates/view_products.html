@@ -1,0 +1,102 @@
+{% extends 'layout.html' %} {% block title %}Trackmate360{% endblock %} {% block
+content %}
+<br />
+<br />
+<br />
+<input
+  type="text"
+  id="content"
+  onkeyup="searchTable()"
+  placeholder="Search for products"
+  style="margin-left: 250px"
+/>
+
+<h2 style="margin-left: 250px">Products</h2>
+
+{% if tasks %}
+<table id="customers" style="font-size: 15px">
+  <tr>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Brand</th>
+    <th>Attributes</th>
+    <th>Values</th>
+    <th>Inventory</th>
+    <th>Sold as</th>
+    <th>Price</th>
+    <th>Tax</th>
+    <th>Action</th>
+  </tr>
+  {% for task in tasks %}
+  <tr>
+    <td>{{task.pro_name}}</td>
+    <td>{{task.cat}}</td>
+    <td>{{task.brand}}</td>
+    <td>{{task.att_name}}</td>
+    <td>{{task.att_value}}</td>
+    <td>{{task.inventory}}</td>
+    <td>{{task.soldas}}</td>
+    <td>&#8377;{{task.price}}</td>
+    <td>{{task.tax}}</td>
+
+    <td>
+      <a href="/delete4/{{task.pro_id}}"
+        ><ion-icon name="trash-outline" id="ion-icon"></ion-icon></a
+      >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="/update4/{{task.pro_id}}"
+        ><ion-icon
+          name="create-outline"
+          style="size: 15px"
+          id="ion-icon"
+        ></ion-icon
+      ></a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<div id="noResults" style="display: none">
+  <h2 style="color: #ad44b4; margin-left: 600px">No results found</h2>
+</div>
+<script
+  type="module"
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+></script>
+<script
+  nomodule
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+></script>
+<script>
+  // JavaScript function for table search
+  function searchTable() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("content");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("customers");
+    tr = table.getElementsByTagName("tr");
+
+    // Counter for matching rows
+    var matchCount = 0;
+
+    // Loop through all table rows, and hide those that don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0]; // Assuming the search is based on the first column (change as needed)
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+          matchCount++;
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+
+    // Display or hide the "No results found" message based on matchCount
+    var noResultsMessage = document.getElementById("noResults");
+    noResultsMessage.style.display = matchCount === 0 ? "block" : "none";
+  }
+</script>
+{% endblock %}

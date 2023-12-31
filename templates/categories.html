@@ -1,0 +1,25 @@
+{% extends 'layout.html' %} {% block title %}Trackmate360{% endblock %} {% block
+content %}
+
+<h1 style="margin-left: 250px">Categories</h1>
+{% if tasks|length < 1 %}
+<h4 style="margin-left: 230px">There are no Categories. Create one below</h4>
+<form action="/categories" method="POST" style="margin-left: 230px">
+  <input type="text" name="content" id="content" placeholder="Category" />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <button class="button" style="vertical-align: middle">
+    <span>Add</span>
+  </button>
+  <br /><br />
+</form>
+{% else %}
+<form action="/categories" method="POST" style="margin-left: 230px">
+  <input type="text" name="content" id="content" placeholder="Category" />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <button class="button" style="vertical-align: middle">
+    <span>Add</span>
+  </button>
+  <br /><br />
+</form>
+
+{% endif %} {% endblock %}

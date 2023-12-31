@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+      <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <link
+      id="theme-style"
+      rel="stylesheet"
+      href="{{ url_for('static',filename='dummy.css')}}"
+    />
+   
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static',filename='favicon.png')}}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>{% block title %}Trackmate360{% endblock %}</title>
+  </head>
+  <body>
+    <div id="navigation_bar">
+      <ul id="luu">
+          <li>
+              <img src="{{ url_for('static',filename='logo.png')}}"
+              alt="logo" width="200px" id="toggleImage"
+    ></img>
+          </li>
+      <li>
+      <a href="/layout">&#127960; &nbsp;&nbsp;Home</a></li>
+     <li><a class="dropdown-btn" href="#">Categories </a>
+      <!-- Add a class to the dropdown container for styling and manipulation -->
+      <div class="dropdown-container">
+        <a href="/categories">Add</a>
+        <a href="/view_categories">View</a>
+      </div></li>
+      <li><a class="dropdown-btn" href="#">Brands </a>
+        <!-- Add a class to the dropdown container for styling and manipulation -->
+        <div class="dropdown-container">
+          <a href="/brands">Add</a>
+          <a href="/view_brands">View</a>
+        </div></li>
+      <li> <a class="dropdown-btn" href="#">Attributes</a>
+        <!-- Add a class to the dropdown container for styling and manipulation -->
+        <div class="dropdown-container">
+          <a href="/attributes">Add</a>
+          <a href="/view_attributes">View</a>
+        </div></li>
+      <li>
+        <a class="dropdown-btn" href="#">Products </a>
+        <!-- Add a class to the dropdown container for styling and manipulation -->
+        <div class="dropdown-container">
+          <a href="/products">Add</a>
+          <a href="/view_products">View</a>
+        </div>
+      </li>
+      <li>
+        <a class="dropdown-btn" href="#">Sales </a>
+        <!-- Add a class to the dropdown container for styling and manipulation -->
+        <div class="dropdown-container">
+          <a href="/sales">Add</a>
+          <a href="/view_sales">View</a>
+        </div>
+      </li>
+      
+      <li><a href="/invent">Inventory</a></li>
+      <li><a href="/purchases">Purchases</a></li>
+      <li><a href="/reports">Reports</a></li>
+      <li><a href="/charts">Charts</a></li>
+
+    <li>
+      <a class="dropdown-btn" href="#">Settings </a>
+      <!-- Add a class to the dropdown container for styling and manipulation -->
+      <div class="dropdown-container">
+        <a style="color : white">Switch Theme &nbsp;<input type="checkbox" id="checkbox"  ></a>
+        <a href="/logout">Logout</a>
+      </div>
+    </li>
+
+    
+      </ul>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+     var dropdown = document.getElementsByClassName("dropdown-btn");
+     var i;
+   
+     for (i = 0; i < dropdown.length; i++) {
+       dropdown[i].addEventListener("click", function () {
+         console.log("Dropdown clicked");
+         this.classList.toggle("active");
+         var dropdownContent = this.nextElementSibling;
+         console.log("Dropdown content display:", dropdownContent.style.display);
+         if (dropdownContent.style.display === "block") {
+           dropdownContent.style.display = "none";
+         } else {
+           dropdownContent.style.display = "block";
+         }
+       });
+     }
+   });
+ </script>  
+   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+       
+  {% block content %}
+  <h1 style="margin-left: 250px;">Home</h1>
+
+    <div style="margin-left: 200px;">
+      <table id="hey" style="margin-left: 20px;">
+        {% for datas in data %}
+        <tr>
+          <td id="tbh" >Income</td>
+          <td id="tbh" >Expenses</td>
+          <td id="tbh" >Profit</td>
+          <td id="tbh" >Total number of sales</td>
+        </tr>
+        <tr>
+          <td id="paddu"> {{datas.income}}</td>
+          <td id="paddu">{{datas.expense}}</td>
+          <td id="paddu">{{datas.profit}}</td>
+          <td id="paddu">  {% for c in count %}
+             {{c.count}}
+              {% endfor %}</td>
+        </tr>
+      </table> 
+        {% endfor %}
+
+      <br><br><br>
+       </div>
+    </div>
+       <div id="chart" style="margin-left: 270px;">
+        <h3 >Total Price vs Quantity</h3><br><br>
+        <div style="width: 500px; height: 500px; display: flex">
+          <canvas id="myChart" width="600" height="600" style="color:#ad44b4"></canvas>
+        </div>
+        <br /><br /><br />
+        <h3 style="margin-left: 20px;">Number of sales vs Dates</h3><br><br>
+        <div style="width: 500px; height: 500px; display: flex;">
+          <canvas id="salesChart" width="400" height="400"></canvas>
+        </div>
+        <script>
+          // JavaScript code to fetch data and create a chart
+          document.addEventListener("DOMContentLoaded", function () {
+           
+            fetch("/get_sales_data_from_db")
+              .then((response) => response.json())
+              .then((data) => {
+                // Extract data for the chart
+                const dates = data.map((entry) => entry.date_of_sales);
+                const numberOfSales = data.map((entry) => entry.number_of_sales);
+  
+               
+                const ctx = document
+                  .getElementById("salesChart")
+                  .getContext("2d");
+                const salesChart = new Chart(ctx, {
+                  type: "bar", 
+                  data: {
+                    labels: dates,
+                    datasets: [
+                      {
+                        label: "Number of Sales",
+                        data: numberOfSales,
+                        backgroundColor: "rgba(94,190,196, 0.2)",
+                        borderColor: "rgba(94,190,196, 1)",
+                        borderWidth: 2,
+                      },
+                    ],
+                  },
+                  options: {
+                    scales: {
+                      y: {
+                        beginAtZero: true,
+                      },
+                    },
+                  },
+                });
+              })
+              .catch((error) => console.error("Error fetching data:", error));
+          });
+        </script>
+        <script>
+          // JavaScript code to fetch data and create a chart
+          document.addEventListener("DOMContentLoaded", function () {
+            // Make an AJAX request to the server-side route
+            fetch("/get_data_from_db")
+              .then((response) => response.json())
+              .then((data) => {
+                // Extract data for the chart
+                const labels = data.map((entry) => entry.column1);
+                const values = data.map((entry) => entry.column2);
+  
+                // Create a Chart.js chart
+                const ctx = document.getElementById("myChart").getContext("2d");
+                const myChart = new Chart(ctx, {
+                  type: "line", // Specify the chart type (bar, line, pie, etc.)
+                  data: {
+                    labels: labels,
+                    datasets: [
+                      {
+                        label: "total price",
+                        data: values,
+                        backgroundColor: "rgba(94,190,196, 0.2)",
+                        borderColor: "rgba(94,190,196,1)",
+                        borderWidth: 2,
+                      },
+                    ],
+                  },
+                  options: {
+                    scales: {
+                      y: {
+                        beginAtZero: true,
+                      },
+                    },
+                  },
+                });
+              })
+              .catch((error) => console.error("Error fetching data:", error));
+          });
+        </script>
+       
+      </div>
+       {% endblock %}
+       
+
+  </body>
+
+</html>

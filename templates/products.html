@@ -1,0 +1,173 @@
+{% extends 'layout.html' %} {% block title %}Trackmate360{% endblock %} {% block
+content %}
+<div class="content">
+  <h1 style="margin-left: 250px">Products</h1>
+
+  {% if tasks|length < 1 %}
+  <h4 style="margin-left: 250px">There are no products. Create one below</h4>
+  <form action="/products" method="POST" style="margin-left: 230px">
+    &nbsp; &nbsp; &nbsp;<label id="name">Name</label><br /><br />
+    <input
+      type="text"
+      name="item"
+      id="content"
+      placeholder="name"
+    /><br /><br />
+    <table id="dropdown">
+      <tr>
+        <th>Categories</th>
+        <th>Brands</th>
+        <th>Attributes</th>
+        <th>Values</th>
+      </tr>
+      <tr>
+        <td>
+          <select name="cat" id="att_name" class="cat">
+            {% for row in cat %}
+            <option value="{{ row }}" name="cat" id="cat">{{ row }}</option>
+            {% endfor %}
+          </select>
+        </td>
+        <td>
+          <select name="brand" id="att_name" class="brand">
+            {% for row in brand %}
+            <option value="{{ row }}" name="brand" id="brand">{{ row }}</option>
+            {% endfor %}
+          </select>
+        </td>
+        <td>
+          <select
+            name="att_name"
+            id="att_name"
+            class="att_name"
+            onchange="updateValues()"
+          >
+            {% for row in atts_name %}
+            <option value="{{ row }}">{{ row }}</option>
+            {% endfor %}
+          </select>
+        </td>
+        <td>
+          <select id="att_name" name="att_value" class="value"></select>
+        </td>
+      </tr>
+    </table>
+    <br /><br />
+    &nbsp; &nbsp; &nbsp;<label id="name">Inventory</label><br /><br />
+    <input type="text" name="invent" id="content" required /><br /><br />
+    &nbsp; &nbsp; &nbsp;<label id="name">Sold as</label><br /><br />
+    <input type="text" name="soldas" id="content" required /><br /><br />
+    &nbsp; &nbsp; &nbsp;<label id="name">Price</label><br /><br />
+    <input type="text" name="price" id="content" required /><br /><br />
+    &nbsp; &nbsp; &nbsp;<label id="name">GST + Tax</label><br /><br />
+    <input type="text" name="tax" id="content" required /><br /><br />
+    <button class="button" style="vertical-align: middle">
+      <span>Add</span>
+    </button>
+    <br /><br />
+  </form>
+  {% else %}
+
+  <br /><br />
+  <form action="/products" method="POST" style="margin-left: 230px">
+    &nbsp; &nbsp; &nbsp;<label id="name">Name</label><br /><br />
+    <input
+      type="text"
+      name="item"
+      id="content"
+      placeholder="name"
+    /><br /><br />
+    <table id="dropdown">
+      <tr>
+        <th>Categories</th>
+        <th>Brands</th>
+        <th>Attributes</th>
+        <th>Values</th>
+      </tr>
+      <tr>
+        <td>
+          <select name="cat" id="att_name" class="cat">
+            {% for row in cat %}
+            <option value="{{ row }}" name="cat" id="cat">{{ row }}</option>
+            {% endfor %}
+          </select>
+        </td>
+        <td>
+          <select name="brand" id="att_name" class="brand">
+            {% for row in brand %}
+            <option value="{{ row }}" name="brand" id="brand">{{ row }}</option>
+            {% endfor %}
+          </select>
+        </td>
+        <td>
+          <select
+            name="att_name"
+            id="att_name"
+            class="att_name"
+            onchange="updateValues()"
+          >
+            {% for row in atts_name %}
+            <option value="{{ row }}">{{ row }}</option>
+            {% endfor %}
+          </select>
+        </td>
+        <td>
+          <select id="att_name" name="att_value" class="value"></select>
+        </td>
+      </tr>
+    </table>
+    <br /><br />
+    &nbsp; &nbsp; &nbsp;<label id="name">Inventory</label><br /><br />
+    <input type="text" name="invent" id="content" required /><br /><br />
+    &nbsp; &nbsp; &nbsp;<label id="name">Sold as</label><br /><br />
+    <input type="text" name="soldas" id="content" required /><br /><br />
+    &nbsp; &nbsp; &nbsp;<label id="name">Price</label><br /><br />
+    <input type="text" name="price" id="content" required /><br /><br />
+    &nbsp; &nbsp; &nbsp;<label id="name">GST + Tax</label><br /><br />
+    <input type="text" name="tax" id="content" required /><br /><br />
+    <button class="button" style="vertical-align: middle">
+      <span>Add</span>
+    </button>
+    <br /><br />
+  </form>
+</div>
+
+{% endif %}
+<script>
+  function updateValues() {
+    const attributeSelect = document.getElementsByClassName("att_name")[0];
+    const valueSelect = document.getElementsByClassName("value")[0];
+
+    // Get the selected attribute
+    const selectedAttribute = attributeSelect.value;
+
+    // Clear previous options
+    valueSelect.innerHTML = "";
+
+    // Fetch data from the server based on the selected attribute
+    fetch(`/get_values/${selectedAttribute}`)
+      .then((response) => response.json())
+      .then((values) => {
+        // Add new options based on the fetched values
+        values.forEach((value) => {
+          const option = document.createElement("option");
+          option.text = value;
+          valueSelect.add(option);
+        });
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }
+
+  // Call updateValues initially to populate the second dropdown based on the default attribute
+  updateValues();
+</script>
+<script
+  type="module"
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+></script>
+<script
+  nomodule
+  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+></script>
+
+{% endblock %}

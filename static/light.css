@@ -1,0 +1,269 @@
+/* Light Theme CSS */
+
+body {
+  background-color: #faf6eb; /* White background */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  height: 600px;
+  position: fixed;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 1000;
+  background-color: #f2f2f2; /* Light gray background for the sidebar */
+}
+
+#weicon {
+  color: #f92c85; /* Pink color for the 'weicon' element */
+}
+
+#date {
+  background-color: #e0e0e0; /* Light gray background for the date element */
+  padding-right: 30px;
+  margin-top: 7px;
+  padding-left: 30px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  border: 1px solid black; /* Blue border */
+  color: #333333; /* Dark text color */
+  text-align: center;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 2px;
+  filter: invert(20%) sepia(90%) saturate(1000%) hue-rotate(300deg);
+}
+
+#ion-icon {
+  color: #ffffff; /* White text color for the 'ion-icon' element */
+  text-align: center;
+  border: 1px solid #f92c85; /* Blue border */
+  border-radius: 30px;
+  padding: 13px;
+  background-color: #f92c85; /* Blue background color */
+}
+
+#inputget {
+  background-color: #f2f2f2; /* Light gray background for the inputget element */
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-left: 25px;
+  margin-right: 20px;
+}
+
+#nameof {
+  color: #f92c85; /* Blue color for the 'nameof' element */
+  margin-left: 230px;
+}
+h1 {
+  color: #f92c85;
+  margin-left: 250px;
+}
+#tbh {
+  color: #f92c85;
+  font-weight: 700;
+  font-size: larger;
+}
+#content {
+  border: none;
+  border-bottom: 3px solid #f92c85; /* Blue border */
+  padding: 10px;
+  font-size: medium;
+  width: 40%;
+  margin-left: 30px;
+  background-color: #f2f2f2; /* Light gray background for the content area */
+  color: #333333; /* Dark text color */
+}
+
+input:focus {
+  outline: none;
+}
+
+#count {
+  background-color: #e0e0e0; /* Light gray background for the count element */
+  border: 0px solid rgba(0, 0, 0, 0.253); /* Blue border */
+  padding-right: 7px;
+  padding-left: 7px;
+  color: #333333; /* Dark text color */
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f92c85; /* Blue background color for buttons */
+  border: none;
+  color: #ffffff; /* White text color for buttons */
+  text-align: center;
+  font-size: 17px;
+  padding: 10px;
+  width: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  margin-right: 10px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+#name {
+  color: #333333; /* Dark text color for 'name' element */
+  margin-left: 5px;
+  margin-top: 0;
+}
+
+#navigation_bar {
+  float: left;
+  height: 1000px;
+}
+
+li a {
+  display: block;
+  color: black; /* Dark text color for links */
+  padding: 15px 16px;
+  text-decoration: none;
+  text-align: center;
+}
+
+/* Change the link color on hover */
+li a:hover {
+  background-color: #f92c858c; /* Light gray background on hover for links */
+  color: #333333; /* Dark text color on hover for links */
+}
+
+#customers {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+  border: none;
+  float: right;
+  margin-right: 20px;
+  background-color: #f2f2f2; /* Light gray background for the table */
+}
+
+#customers td,
+#customers th {
+  border: none;
+  padding: 12px;
+  color: black;
+}
+
+#customers tr:nth-child(even) {
+  background-color: #f2f2f2; /* Light gray background for even rows */
+  color: #ffe9e9; /* Dark text color */
+}
+
+#customers tr:nth-child(odd) {
+  background-color: #fff6f2; /* Lighter gray background for odd rows */
+  color: #fff0f0; /* Dark text color */
+}
+
+#customers tr:hover {
+  background-color: #d9d9d9; /* Slightly darker gray background on hover for rows */
+}
+
+#customers th {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  text-align: left;
+  background-color: #f92c85; /* Blue background color for table headers */
+  color: #ffffff; /* White text color for table headers */
+}
+
+#att_name {
+  color: #333333; /* Dark text color for 'att_name' element */
+  background-color: #e0e0e0; /* Light gray background for 'att_name' element */
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+#att_name:hover {
+  background-color: #d9d9d9; /* Slightly darker gray background on hover for 'att_name' element */
+}
+
+#dropdown {
+  margin-right: 300px;
+}
+
+#dropdown th,
+td {
+  margin-left: 0;
+  border: none;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 17px;
+  color: #f92c858c; /* Dark text color */
+  font-weight: 400;
+}
+
+option {
+  border-radius: none;
+  background-color: #f2f2f2; /* Light gray background for options */
+  padding-top: 30px;
+  display: inline-block;
+}
+h3 {
+  color: #f92c85;
+  margin-left: 20px;
+}
+h4 {
+  color: #f92c85;
+  margin-left: 230px;
+}
+h2 {
+  color: #f92c85;
+  margin-left: 250px;
+}
+label {
+  color: #f92c85;
+  margin-left: 20px;
+}
+input {
+  color: #f92c85;
+}
+#nav1 {
+  background-color: #f92c85;
+}
+.dropdown-container {
+  display: none;
+  background-color: rgb(244, 233, 224);
+}
+#luu {
+  background-color: #faf6eb;
+}
+#paddu {
+  color: black;
+}
